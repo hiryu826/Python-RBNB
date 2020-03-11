@@ -9,10 +9,9 @@ black = "*"
 
 [packages]
 django = "==2.2.5"
-jango-countries = "*"
-jdango-countries = "*"
 django-countries = "*"
 pillow = "*"
+django-seed = "*"
 
 [requires]
 python_version = "3.8"

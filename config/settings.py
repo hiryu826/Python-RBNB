@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "+@7d$7ak$bzstlm28wx^$ckq(w5di4$b4li1%dp2!mea$lk-nw"
+SECRET_KEY = "ih23_agqnu2zygo(vy(uwq)640)qcky*92as#%m(1puy2-l%4+"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,10 +39,9 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 
-THIRD_PARTY_APPS = [
-    "django_countries",
-]
+THIRD_PARTY_APPS = ["django_countries", "django_seed"]
 
+# User app 설치
 PROJECT_APPS = [
     "core.apps.CoreConfig",
     "users.apps.UsersConfig",
@@ -102,7 +101,7 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
     },
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
@@ -130,3 +129,7 @@ USE_TZ = True
 STATIC_URL = "/static/"
 
 AUTH_USER_MODEL = "users.User"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
+
+MEDIA_URL = "/media/"  # 무엇을 쓰던 간 다루는 것은 uploads 폴더 안의 것들이다.

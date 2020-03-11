@@ -52,7 +52,7 @@ class Photo(core_models.TimeStampedModel):
     """ Photo Model Definition """
 
     caption = models.CharField(max_length=80)
-    file = models.ImageField()
+    file = models.ImageField(upload_to="room_photos")
     # room이 지워질 시 Photo도 함께 지워지도록 설정
     # Python은 파일을 상하수직으로 읽기때문에 Room이 정의되어있지 않으므로 밑으로 옮겨주어야 한다.
     # 또는 String으로 ForeignKey를 생설할 수 있다. (선택 된 모든 것들이 string이 된다. / User를 Importing 할 필요가 없어진다.)
@@ -92,3 +92,17 @@ class Room(core_models.TimeStampedModel):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        self.city = str.capitalize(self.city)
+        # print(self.city)
+        super().save(*args, **kwargs)
+
+    def total_rating(self):
+        all_reviews = self.reviews.all()  # review의 related_name 가져오기
+        all_ratings = 0
+        if len(all_reviews) > 0:
+            for review in all_reviews:
+                all_ratings += review.rating_average()
+            return round(all_ratings / len(all_reviews), 2)
+        return 0

@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.html import mark_safe
 from . import models
 
 
@@ -15,15 +16,37 @@ class ItemAdmin(admin.ModelAdmin):
     pass
 
 
+# class PhotoInline(admin.StackedInline):
+
+# model = models.Photo
+
+
+class PhotoInline(admin.TabularInline):
+
+    model = models.Photo
+
+
 @admin.register(models.Room)
 class RoomAdmin(admin.ModelAdmin):
 
     """ Room Admin Definition """
 
+    inlines = (PhotoInline,)
+
     fieldsets = (
         (
             "Basic Info",
-            {"fields": ("name", "description", "country", "address", "price", "host")},
+            {
+                "fields": (
+                    "name",
+                    "description",
+                    "country",
+                    "city",
+                    "address",
+                    "price",
+                    "host",
+                )
+            },
         ),
         ("Times", {"fields": ("check_in", "check_out", "instant_book")}),
         ("Spaces", {"fields": ("guests", "beds", "bedrooms", "baths")}),
@@ -52,6 +75,7 @@ class RoomAdmin(admin.ModelAdmin):
         "instant_book",
         "count_amenities",
         "count_photos",
+        "total_rating",
     )
 
     list_filter = (
@@ -65,9 +89,17 @@ class RoomAdmin(admin.ModelAdmin):
         "country",
     )
 
+    # User admin을 사용해서 작은 버전의 user admin을 확인할 수 있다.
+    raw_id_fields = ("host",)
+
     search_fields = ["=city", "^host__username"]
 
     filter_horizontal = ("amenities", "facilities", "house_rules")
+
+    # def save_model(self, request, obj, form, change):
+    #     print(obj, form, change)
+    #     obj.user = request.user
+    #     super().save_model(request, obj, form, change)
 
     def count_amenities(self, obj):  # self: admin class, obj: row
         # print(obj.amenities.all()) // Query Set 확인
@@ -76,10 +108,18 @@ class RoomAdmin(admin.ModelAdmin):
     def count_photos(self, obj):
         return obj.photos.count()
 
+    count_photos.short_description = "Photo Count"
+
 
 @admin.register(models.Photo)
 class PhotoAdmin(admin.ModelAdmin):
 
-    """  """
+    """ Phots Admin Definition"""
 
-    pass
+    list_display = ("__str__", "get_thumbnail")
+
+    def get_thumbnail(self, obj):
+        return mark_safe(f'<img width="30px" height="30px" src="{obj.file.url}" />')
+
+    get_thumbnail.short_description = "Thumbnail"
+
