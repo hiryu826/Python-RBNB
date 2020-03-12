@@ -1,0 +1,10 @@
+{% extends "base.html" %} {% for room in rooms %}
+<h1>{{room.name}} / ${{room.price}}</h1>
+{% endfor %}
+
+<!-- <h1>Wow</h1>
+
+<h4>The time right now is: {{now}}</h4>
+<h5>
+  {% if hungry %} I'm hungry {{hungry}} {% else %} I'm Okay{% endif %}
+</h5> -->
