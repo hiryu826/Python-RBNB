@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
-  </head>
-  <body>
-    &copy: RBnb
-  </body>
+    <title>{% block page_name %} {% endblock page_name %} | RBnB</title>
+</head>
+
+<body>
+    {% include "partials/header.html" %}
+    <!-- Django가 Compile 해주고, 대신하여 include 해준다. -->
+    {% block content %} {% endblock content %}
+    {% include "partials/footer.html" %}
+</body>
+
 </html>
