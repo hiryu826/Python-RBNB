@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block page_name%}
+Home
+{% endblock page_name %}
+
+{% block content %}
+
+{{now}}
+
+{% for room in rooms %}
+<h5>
+  <a href="{% url "rooms:detail" room.pk %}">
+    {{room.name}} / ${{room.price}}
+  </a>
+</h5>
+{% endfor %}
+
+<h5>
+  {% if page_obj.has_previous %}
+  <a href=" ?page={{page_obj.previous_page_number}}">Previous</a>
+  {% endif %}
+
+  page{{page_obj.number}} of page {{page_obj.paginator.num_pages}}
+
+  {% if page_obj.has_next %}
+  <a href="?page={{page_obj.next_page_number}}">Next</a>
+  {% endif %}<br>
+</h5>
+
+<!-- {% for room in page.object_list %}
+<h5>{{room.name}} / ${{room.price}}</h5>
+{% endfor %}
+
+<h5>
+  {% if page.has_previous %}
+  <a href="?page={{page.number|add:-1}}">Previous</a>
+  {% endif %}
+
+  page{{page.number}} of page{{page.paginator.num_pages}}
+
+  {% if page.has_next %}
+  <a href="?page={{page.next_page_number}}">Next</a>
+  {% endif %}<br> -->
+
+<!-- Paginator 방식 -->
+<!-- {% for page in page.paginator.page_range %}
+  <a href="?page={{page}}">{{page}}</a>
+  {% endfor %}
+
+</h5> -->
+
+<!-- {% if page is not 1 %}
+<a href="?page={{page|add:-1}}">Previous</a>
+{% endif %}
+
+page{{page}} of page{{page_count}}
+
+{% if not page == page_count %}
+<a href="?page={{page|add:1}}">Next</a>
+{% endif %}<br> -->
+
+<!-- 리스트 방식
+{% for page in page_range%}
+<a href="?page={{page}}">{{page}}</a>
+{% endfor %} -->
+
+{% endblock content %}
+
+<!-- <h1>Wow</h1>
+<h4>The time right now is: {{now}}</h4>
+  <h5>
+    {% if hungry %} I'm hungry {{hungry}} {% else %} I'm Okay{% endif %}
+  </h5> -->
