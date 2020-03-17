@@ -6,8 +6,6 @@ Home
 
 {% block content %}
 
-{{now}}
-
 {% for room in rooms %}
 <h5>
   <a href="{% url "rooms:detail" room.pk %}">
