@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from . import models
 
+
 @admin.register(models.User)  # decorator 방식
 class CustomUserAdmin(UserAdmin):
 
@@ -37,4 +38,6 @@ class CustomUserAdmin(UserAdmin):
         "superhost",
         "is_staff",
         "is_superuser",
+        "email_verified",
+        "email_secret",
     )
