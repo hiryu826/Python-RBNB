@@ -1,20 +1,2 @@
 # Auto detect text files and perform LF normalization
 * text=auto
-
-# Environments
-.env
-.venv
-/.env
-/.ENV
-.env/
-.ENV/
-env/
-ENV/
-/env
-/ENV
-venv/
-/venv
-env.bak/
-venv.bak/
-/env.bak
-/venv.bak

@@ -169,7 +169,6 @@ def kakao_callback(request):
             "https://kapi.kakao.com/v2/user/me",
             headers={"Authorization": f"Bearer {access_token}"},
         )
-        print(profile_request.json())
         profile_json = profile_request.json()
         email = profile_json.get("kaccount_email", None)
         if email is None:
@@ -193,7 +192,9 @@ def kakao_callback(request):
             user.save()
             if profile_image is not None:
                 photo_request = requests.get(profile_image)
-                user.avatar.save(f"{nickname}-avatar", photo_request.content)
+                user.avatar.save(
+                    f"{nickname}-avatar", ContentFile(photo_request.content)
+                )
         login(request, user)
         return redirect(reverse("core:home"))
     except KakaoException:

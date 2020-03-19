@@ -1,0 +1,20 @@
+# Environments
+.env
+.venv
+/.env
+/.ENV
+.env/
+.ENV/
+env/
+ENV/
+/env
+/ENV
+venv/
+/venv
+env.bak/
+venv.bak/
+/env.bak
+/venv.bak
+
+# Somethings
+node_modules/
