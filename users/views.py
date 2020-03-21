@@ -38,21 +38,21 @@ class SignUpView(FormView):
     template_name = "users/signup.html"
     form_class = forms.SignUpForm
     success_url = reverse_lazy("core:home")
-    initial = {
-        "first_name": "Ryu",
-        "last_name": "Sehyun",
-        "email": "92rsh@naver.com",
-    }
+    # initial = {
+    #     "first_name": "Ryu",
+    #     "last_name": "Sehyun",
+    #     "email": "92rsh@naver.com",
+    # }
 
+    # form이 유요할 시 save가 동작한다.
     def form_valid(self, form):
-        # form이 유요할 시 save가 동작한다.
         form.save()
         email = form.cleaned_data.get("email")
         password = form.cleaned_data.get("password")
         user = authenticate(self.request, username=email, password=password)
         if user is not None:
             login(self.request, user)
-        user.send_verify_email()
+        user.verify_email()
         return super().form_valid(form)
 
 
@@ -169,6 +169,7 @@ def kakao_callback(request):
             "https://kapi.kakao.com/v2/user/me",
             headers={"Authorization": f"Bearer {access_token}"},
         )
+        print(profile_request.json())
         profile_json = profile_request.json()
         email = profile_json.get("kaccount_email", None)
         if email is None:
