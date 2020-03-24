@@ -6,12 +6,11 @@
 
 {% block content %}
 <div class="-mt-5 container max-w-full h-75vh flex mb-20">
-    <div class="h-full w-1/2 bg-cover bg-center" style="background-image: url({{room.first_photo}})"></div>
+    <div class="h-full w-1/2 bg-center bg-cover" style="background-image:url({{room.first_photo}})"></div>
     <div class="h-full w-1/2 flex flex-wrap">
-        {% for photo in room.get_next_four_photos%}
-        <div style="background-image: url({{photo.file.url}})"
-            class="w-1/2 h-auto bg-cover bg-center border-gray-500 border">
-        </div>
+        {% for photo in room.get_next_four_photos %}
+        <div style="background-image:url({{photo.file.url}})"
+            class="w-1/2 h-auto bg-cover bg-center border-gray-700 border"></div>
         {% endfor %}
     </div>
 </div>
@@ -87,7 +86,11 @@
             </div>
         </div>
     </div>
-    <div class="w-1/3"></div>
+    <div class="w-1/3">
+        {% if room.host == user %}
+        <a href="{% url 'rooms:edit' room.pk %}" class="btn-link block">Edit Room</a>
+        {% endif %}
+    </div>
 </div>
 {{room.get_next_four_photos}}
 {% endblock %}
