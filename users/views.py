@@ -6,6 +6,7 @@ from django.views.generic import FormView, DetailView, UpdateView
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.core.files.base import ContentFile
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
@@ -270,20 +271,47 @@ class UpdatePasswordView(
         }
         return form
 
-    def get_success_url(slef):
+    def get_success_url(self):
         return self.request.user.get_absolute.url()
 
-    # def form_valid(self, form):
-    #     email = form.cleaned_data.get("email")
-    #     self.object.username = email
-    #     self.object.save()
-    #     return super().form_valid(form)
 
-    # -- functuion을 사용한 context 확장 --
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context["hello"] = "Hello!"
-    #     return context
+# Session
+@login_required
+def switch_hosting(request):
+    try:
+        del request.session["is_hosting"]
+    except KeyError:
+        request.session["is_hosting"] = True
+    return redirect(reverse("core:home"))
+
+
+# -------------------------------------------
+# Session
+# @login_required
+# def start_hosting(request):
+#     request.session["is_hosting"] = True
+#     return redirect(reverse("core:home"))
+
+# @login_required
+# def stop_hosting(request):
+#     try:
+#         del request.session["is_hosting"]
+#     except KeyError:
+#         pass
+#     return redirect(reverse("core:home"))
+# -------------------------------------------
+
+# def form_valid(self, form):
+#     email = form.cleaned_data.get("email")
+#     self.object.username = email
+#     self.object.save()
+#     return super().form_valid(form)
+
+# -- functuion을 사용한 context 확장 --
+# def get_context_data(self, **kwargs):
+#     context = super().get_context_data(**kwargs)
+#     context["hello"] = "Hello!"
+#     return context
 
 
 # -----------------------------------
