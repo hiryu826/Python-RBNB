@@ -30,6 +30,7 @@ urlpatterns = [
     path("lists/", include("lists.urls", namespace="lists")),
     path("conversations/", include("conversations.urls", namespace="conversations")),
     path("admin/", admin.site.urls),
+    path("sentry-debug/", trigger_error),
 ]
 
 # 개발 중일 경우 폴더안의 파일들을 제공한다는 의미
